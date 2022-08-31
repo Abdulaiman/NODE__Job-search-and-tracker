@@ -16,7 +16,12 @@ const JobSchema = new mongoose.Schema({
       "interview-scheduled",
       "interviewed",
       "accepted",
+      "declined",
     ],
+  },
+  createdBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
   },
 });
 

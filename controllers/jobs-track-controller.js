@@ -2,15 +2,20 @@ const Job = require("../model/jobs-tracker-model");
 const catchAsync = require("../utils/catch-async");
 
 exports.createJob = catchAsync(async (req, res, next) => {
+  req.body.createdBy = req.user._id;
   const job = await Job.create(req.body);
-
   res.status(201).json({
     status: "success",
     job,
   });
 });
 exports.getAllJobs = catchAsync(async (req, res, next) => {
-  const jobs = await Job.find();
+  const id = req.user._id;
+  const jobs = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
+  ]);
 
   res.status(201).json({
     status: "success",
@@ -36,7 +41,11 @@ exports.deleteJob = catchAsync(async (req, res, next) => {
 });
 
 exports.getWaitingJobs = catchAsync(async (req, res, next) => {
+  const id = req.user._id;
   const jobs = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
     {
       $match: { status: "waiting" },
     },
@@ -48,7 +57,11 @@ exports.getWaitingJobs = catchAsync(async (req, res, next) => {
   });
 });
 exports.getAppliedJobs = catchAsync(async (req, res, next) => {
+  const id = req.user._id;
   const jobs = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
     {
       $match: { status: "applied" },
     },
@@ -60,7 +73,11 @@ exports.getAppliedJobs = catchAsync(async (req, res, next) => {
   });
 });
 exports.getInterviewScheduledJobs = catchAsync(async (req, res, next) => {
+  const id = req.user._id;
   const jobs = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
     {
       $match: { status: "interview-scheduled" },
     },
@@ -72,7 +89,11 @@ exports.getInterviewScheduledJobs = catchAsync(async (req, res, next) => {
   });
 });
 exports.getAcceptedJobs = catchAsync(async (req, res, next) => {
+  const id = req.user._id;
   const jobs = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
     {
       $match: { status: "accepted" },
     },
@@ -83,7 +104,11 @@ exports.getAcceptedJobs = catchAsync(async (req, res, next) => {
   });
 });
 exports.getInterviewedJobs = catchAsync(async (req, res, next) => {
+  const id = req.user._id;
   const jobs = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
     {
       $match: { status: "interviewed" },
     },
