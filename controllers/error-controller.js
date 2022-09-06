@@ -46,7 +46,7 @@ exports.globalErrorHandler = (err, req, res, next) => {
   err.status = err.status || "fail";
 
   if (process.env.NODE_ENV === "production") {
-    sendErrorProd(err, res);
+    sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === "development") {
     let error = { ...err };
 
