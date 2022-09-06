@@ -15,11 +15,30 @@ exports.getAllJobs = catchAsync(async (req, res, next) => {
     {
       $match: { createdBy: id },
     },
-  ]);
+  ]).sort({ _id: -1 });
 
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     jobs,
+  });
+});
+exports.getAllJobsStats = catchAsync(async (req, res, next) => {
+  const id = req.user._id;
+  const stats = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
+    {
+      $group: {
+        _id: "$status",
+        sum: { $sum: 1 },
+      },
+    },
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    stats,
   });
 });
 exports.updateJob = catchAsync(async (req, res, next) => {
@@ -49,7 +68,23 @@ exports.getWaitingJobs = catchAsync(async (req, res, next) => {
     {
       $match: { status: "waiting" },
     },
-  ]);
+  ]).sort({ _id: -1 });
+
+  res.status(200).json({
+    status: "success",
+    jobs,
+  });
+});
+exports.getDeclinedJobs = catchAsync(async (req, res, next) => {
+  const id = req.user._id;
+  const jobs = await Job.aggregate([
+    {
+      $match: { createdBy: id },
+    },
+    {
+      $match: { status: "declined" },
+    },
+  ]).sort({ _id: -1 });
 
   res.status(200).json({
     status: "success",
@@ -65,7 +100,7 @@ exports.getAppliedJobs = catchAsync(async (req, res, next) => {
     {
       $match: { status: "applied" },
     },
-  ]);
+  ]).sort({ _id: -1 });
 
   res.status(200).json({
     status: "success",
@@ -81,7 +116,7 @@ exports.getInterviewScheduledJobs = catchAsync(async (req, res, next) => {
     {
       $match: { status: "interview-scheduled" },
     },
-  ]);
+  ]).sort({ _id: -1 });
 
   res.status(200).json({
     status: "success",
@@ -97,7 +132,7 @@ exports.getAcceptedJobs = catchAsync(async (req, res, next) => {
     {
       $match: { status: "accepted" },
     },
-  ]);
+  ]).sort({ _id: -1 });
   res.status(200).json({
     status: "success",
     jobs,
@@ -112,7 +147,7 @@ exports.getInterviewedJobs = catchAsync(async (req, res, next) => {
     {
       $match: { status: "interviewed" },
     },
-  ]);
+  ]).sort({ _id: -1 });
   res.status(200).json({
     status: "success",
     jobs,

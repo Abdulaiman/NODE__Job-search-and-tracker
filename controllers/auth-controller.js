@@ -24,7 +24,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({ email });
 
-  const correct = await user.correctPassword(password, user.password);
+  const correct = await user?.correctPassword(password, user.password);
   if (!correct || !user) {
     return next(
       new AppError("wrong email or password please check and try again", 400)
@@ -61,9 +61,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   const user = await User.findById(verified.id);
-  // if (!user) next(new AppError("user does no longer exist"));
-  // if (user.passwordChangedAt && verified.iat < user.passwordChangedAt)
-  //   next(new AppError("user recently changed his password"));
 
   req.user = user;
   next();

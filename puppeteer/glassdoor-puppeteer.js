@@ -12,9 +12,11 @@ exports.gdData = async (language) => {
     defaultViewport: null,
   });
   const page = await browser.newPage();
+  // await page.setDefaultNavigationTimeout(120000);
   await page.goto("https://www.glassdoor.com", {
     waitUntil: "networkidle2",
   });
+
   await page.evaluate(() => {
     document
       .querySelector(
@@ -74,5 +76,6 @@ exports.gdData = async (language) => {
     }
     return glassdoorJobs;
   });
+  await browser.close();
   return glassdoorData;
 };

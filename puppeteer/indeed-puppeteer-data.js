@@ -14,6 +14,7 @@ exports.data = async (language) => {
     defaultViewport: null,
   });
   const page = await browser.newPage();
+  // await page.setDefaultNavigationTimeout(120000);
   await page.goto(
     `https://www.indeed.com/jobs?q=${language}&sc=0kf%3Aattr(DSQF7)%3B&fromage=1`,
     {
@@ -67,6 +68,6 @@ exports.data = async (language) => {
     }
     return data;
   });
-
+  await browser.close();
   return data;
 };

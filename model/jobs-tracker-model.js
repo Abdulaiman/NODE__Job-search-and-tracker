@@ -7,6 +7,10 @@ const JobSchema = new mongoose.Schema({
   postDate: String,
   location: String,
   description: String,
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
   status: {
     type: String,
     default: "waiting",

@@ -15,5 +15,5 @@ mongoose
 
 const server = http.createServer(app);
 
-const PORT = 8000;
-server.listen(PORT, () => console.log(`app listening at port ${PORT}`));
+const port = process.env.PORT || 8000;
+server.listen(port, () => console.log(`app listening at port ${port}`));

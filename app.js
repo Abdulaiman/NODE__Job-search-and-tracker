@@ -6,8 +6,10 @@ const linkedinRouter = require("./router/linkedin-router");
 const jobRouter = require("./router/jobs-track-routes");
 const userRouter = require("./router/user-router");
 const { globalErrorHandler } = require("./controllers/error-controller");
+const cors = require("cors");
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/v1/get-jobs-indeed", indeedRouter);
 app.use("/api/v1/get-jobs-glassdoor", glassdoorRouter);

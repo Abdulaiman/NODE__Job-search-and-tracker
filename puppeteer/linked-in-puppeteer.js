@@ -14,6 +14,7 @@ exports.dataLinkedIn = async (language) => {
     defaultViewport: null,
   });
   const page = await browser.newPage();
+  // await page.setDefaultNavigationTimeout(120000);
   await page.goto(
     `https://www.linkedin.com/jobs/search?keywords=${language}&location=Worldwide&locationId=&geoId=92000000&f_TPR=r86400&f_WT=2&position=1&pageNum=0`,
     {
@@ -59,11 +60,7 @@ exports.dataLinkedIn = async (language) => {
     postDate.forEach((doc) => {
       postDates.push(doc?.textContent.trim());
     });
-    console.log(companiesName);
-    console.log(jobTitles);
-    console.log(postDates);
-    console.log(anchorTags);
-    console.log(comsLocation);
+
     const linkedinData = [];
     for (let i = 0; i < jobTitles.length; i++) {
       linkedinData.push({
@@ -78,6 +75,6 @@ exports.dataLinkedIn = async (language) => {
 
     return linkedinData;
   });
-
+  await browser.close();
   return data;
 };

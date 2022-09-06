@@ -4,13 +4,15 @@
   "description": "",
   "main": "test.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start:dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "Aiman",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
@@ -20,5 +22,8 @@
     "puppeteer-extra-plugin-adblocker": "^2.13.5",
     "puppeteer-extra-plugin-stealth": "^2.11.1",
     "validator": "^13.7.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }

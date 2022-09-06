@@ -6,6 +6,6 @@ exports.getDataLinkedin = catchAsync(async (req, res, next) => {
   const myData = await dataLinkedIn(language);
   res.status(200).json({
     message: "success",
-    data: myData,
+    myData: myData,
   });
 });
